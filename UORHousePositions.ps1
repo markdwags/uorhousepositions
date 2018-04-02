@@ -32,31 +32,37 @@ $HouseOffsets = @{
 
 try {
     # Get the current housing positions from the UOR master list
+    Write-Host "Getting latest house list from UOR"
     $CurrentHousePositions = Invoke-WebRequest -Uri "http://www.uorenaissance.com/map/house.txt"
 
     # Create a blank file or clear out the existing and set it in the UOAM format
+    # UOAM does not like it if you don't use ANSI format on file
+    Write-Host "Generating an empty $($UOAMHousesFile).."
     "3" | Out-File -FilePath $UOAMHousesFile -Encoding ASCII
 
     # Keep count, why not?
     $HouseCount = 0
 
-    Write-Host "Generating $($UOAMHousesFile).."
-
+    Write-Host "Offsetting each X and Y position to display correctly on UOAM. This may take a moment."
     # Loop through each house position, use the key above to adjust the position value
     foreach ($CurrentHouse in $CurrentHousePositions.Content.Split("`n`r")) {  
 
         if ($CurrentHouse.Length -gt 0 -And $CurrentHouse.Contains(":")) {
+            # Grab the type of house and current position on map            
             $HouseType = $CurrentHouse.Substring(1, $CurrentHouse.IndexOf(":") - 1)
             $HousePosition = $CurrentHouse.Substring($CurrentHouse.IndexOf(":") + 2).Split(" ")
 
+            # Find the reference above to get offset position modifiers
             $HouseOffsetPosition = $HouseOffsets."$($HouseType)".Split(",")
 
-            #$HouseOffsets."$($HouseType)"
+            # Update the position of the house based on the table above
             $NewXPosition = [int]$HousePosition[0] + [int]$HouseOffsetPosition[0]
             $NewYPosition = [int]$HousePosition[1] + [int]$HouseOffsetPosition[1]
 
+            # Output the data to the file we created above
             "+$($HouseType): $NewXPosition $NewYPosition $($HousePosition[2]) $HouseType" | Out-File -FilePath $UOAMHousesFile -Encoding ASCII -Append
 
+            # You figure it out
             $HouseCount++
         }
     }
@@ -64,7 +70,7 @@ try {
     Write-Host "$UOAMHousesFile was created with $HouseCount houses"
 }
 catch {
-    Write-Host "Something didn't work. Maybe you need to run this in Admin mode?"
+    Write-Host $_.Exception.Message
 }
 
 
