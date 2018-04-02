@@ -25,3 +25,9 @@ $action = New-ScheduledTaskAction -Execute 'Powershell.exe' -Argument '-NoProfil
 $trigger =  New-ScheduledTaskTrigger -Daily -At 9am 
 Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "UOR House Map Update" -Description "Daily update of the UOR house locations for UOAM" -RunLevel Highest
 ```
+
+If you set it up via the Task Scheduler, set it to run the following command:
+
+```
+Powershell.exe -NoProfile -WindowStyle Hidden C:\Path\To\Script\UORHousePositions.ps1
+```
