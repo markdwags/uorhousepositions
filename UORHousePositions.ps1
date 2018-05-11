@@ -14,7 +14,7 @@ $UOAMHousesFile = "C:\Program Files\UOAM\UORHouses.map"
 # Set the offsets for each out
 $HouseOffsets = @{
     "castle"          = "1,11";
-    "fortress"        = "1,11";
+    "fortress"        = "-14,-16";
     "keep"            = "1,6";
     "large house"     = "0,2";
     "log cabin"       = "1,0";
