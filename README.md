@@ -15,7 +15,7 @@ $UOAMHousesFile = "C:\Program Files\UOAM\UORHouses.map"
 3. Run Powershell script (You may need to run script as an administrator)
 4. After a few moments, a file will be generated in C:\Program Files\UOAM\
 5. If you haven't already, open up UOAM, hit CTRL-A, click the Files tab and Add UORHouses.map.
-6. Go to the Filter tab in Options, scroll down to "keep" and click Edit. Select "Choose Icon" and select Fortress_Update2.ico
+6. If you're missing the icon, go to the Filter tab in Options, scroll down to fortress and click Edit. Select "Choose Icon" and select Fortress_Update2.ico
 
 ## Scheduling:
 
